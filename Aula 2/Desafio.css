@@ -1,0 +1,34 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.linha-quadrado{
+    height: 33.3%;
+}
+
+.quadrado{
+    width: 200px;
+    height: 100%;
+    background-color: rgb(219, 23, 88);
+}
+
+.quadradinho{
+    background-color: black;
+    height: 50%;
+    width: 50px;
+    justify-items:center;
+}
+
+
+.l1{
+    display: flex;
+    justify-content: space-between;
+    height: 33.3%;
+}
+
+.pai{
+    height: 100vh;
+}
+
