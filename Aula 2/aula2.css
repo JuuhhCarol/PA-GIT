@@ -1,0 +1,43 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: 0px;
+}
+
+.quadrado{
+    width: 300px;
+    height: 300px;
+    position: relative;
+    background-color: palevioletred;
+    color: azure;
+    text-align: center;
+    margin: 50px 10px 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.quadradinho{
+    background-color: black;
+    height: 50px;
+    width: 50px;
+}
+
+
+.flex{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pai{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+    
