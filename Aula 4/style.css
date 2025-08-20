@@ -1,0 +1,14 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.quadrado{
+    height: 200px;
+    width: 200px;
+}
+
+.ok{
+    background-color: "inputColor";
+}

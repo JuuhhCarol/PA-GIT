@@ -1,0 +1,42 @@
+        //const nome = "Layss";
+        //const idade = 19;
+        //console.log(nome+ " tem " + idade + " anos.")
+
+        //let Divas = ["Malu","Jhenie","Let"]
+        //console.log(Divas[0]);
+
+       // const obj = {
+            //Nome:"Draculaura",
+            //Idade: 120,
+          //  Pet:"Morcego"
+       // }
+       // console.log(obj);
+
+        //function soma(x,y){ // funçao normal
+            //return x+y;
+        //}
+
+        //const somar = function(a,b){
+            //return a+b;
+        //}
+
+        //const somaArrow = (a,b) => a + b
+        //console.log(somaArrow(5,10));
+
+let Variavel1 = 5 //ESCOPO LOCAL -> ESCOPO DE FUNCAO
+var Variavel2 = 10 //ESCOPO GLOBAL->RARAMENTE USA
+const Variavel3= 15//CONSTANTE
+
+
+    <h1 id="el1">Isso mesmo</h1>
+    <input type="text" id="el2">
+    <script src="exemplo.js"></script>
+    <button onclick="receberTexto()">enviar</button>
+
+let title = document.getElementById('el1').innerHTML
+console.log(title)
+
+const receberTexto =() =>{
+let inputText = document.getElementById('el2').value;
+console.log(inputText)
+}
