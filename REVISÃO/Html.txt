@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Descrição da página" />
+  <meta name="author" content="Seu Nome" />
+  <title>Título da Página</title>
+</head>
+<body>
+
+  <!-- TÍTULOS -->
+  <h1>Título 1</h1>
+  <h2>Título 2</h2>
+  <h3>Título 3</h3>
+  <!-- até h6 -->
+
+  <!-- PARÁGRAFOS E QUEBRA DE LINHA -->
+  <p>Este é um parágrafo.</p>
+  <br />
+
+  <!-- FORMATAÇÃO DE TEXTO -->
+  <strong>Texto em negrito</strong>
+  <em>Texto em itálico</em>
+  <u>Texto sublinhado</u>
+
+  <!-- LINKS -->
+  <a href="https://www.exemplo.com" target="_blank">Visite o site</a>
+
+  <!-- IMAGENS -->
+  <img src="imagem.jpg" alt="Descrição da imagem" width="200" />
+
+  <!-- LISTAS -->
+  <!-- Lista não ordenada -->
+  <ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+  </ul>
+
+  <!-- Lista ordenada -->
+  <ol>
+    <li>Primeiro</li>
+    <li>Segundo</li>
+  </ol>
+
+  <!-- TABELA -->
+  <table border="1">
+    <tr>
+      <th>Nome</th>
+      <th>Idade</th>
+    </tr>
+    <tr>
+      <td>João</td>
+      <td>20</td>
+    </tr>
+  </table>
+
+  <!-- FORMULÁRIO COMPLETO -->
+  <form action="processa.php" method="post">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" /><br /><br />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" /><br /><br />
+
+    <input type="password" name="senha" placeholder="Senha" /><br /><br />
+
+    <input type="number" name="idade" placeholder="Idade" /><br /><br />
+
+    <input type="date" name="data" /><br /><br />
+
+    <input type="checkbox" name="aceito" /> Aceito os termos<br /><br />
+
+    Sexo:<br />
+    <input type="radio" name="sexo" value="M" id="sexoM" />
+    <label for="sexoM">Masculino</label>
+    <input type="radio" name="sexo" value="F" id="sexoF" />
+    <label for="sexoF">Feminino</label><br /><br />
+
+    <label for="estado">Estado:</label>
+    <select name="estado" id="estado">
+      <option value="sp">SP</option>
+      <option value="rj">RJ</option>
+    </select><br /><br />
+
+    <input type="submit" value="Enviar" />
+  </form>
+
+  <!-- ELEMENTOS DE ESTRUTURA -->
+  <div>Conteúdo em bloco (div)</div>
+  <span>Texto em linha (span)</span>
+
+  <!-- SEÇÕES SEMÂNTICAS -->
+  <header>Cabeçalho</header>
+  <nav>
+    <a href="#home">Início</a>
+    <a href="#sobre">Sobre</a>
+  </nav>
+  <main>Principal</main>
+  <section>Seção</section>
+  <article>Artigo</article>
+  <aside>Lateral</aside>
+  <footer>Rodapé</footer>
+
+</body>
+</html>
+
+
+da ! que ele abre sozinho a ESTRUTURA

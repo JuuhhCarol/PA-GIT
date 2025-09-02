@@ -1,0 +1,89 @@
+/* Sintaxe básica */
+seletor {
+  propriedade: valor;  /* define uma regra para o seletor */
+}
+
+/* Seletores */
+h1 { color: blue; }         /* estilo para tag h1 */
+#titulo { color: red; }     /* estilo para id="titulo" */
+.classe { color: green; }   /* estilo para classe="classe" */
+div p { }                   /* todos os <p> dentro de <div> */
+
+/* Texto e fontes */
+color: black;                    /* cor do texto */
+font-size: 16px;                 /* tamanho da fonte */
+font-family: Arial, sans-serif; /* fonte */
+font-weight: bold;               /* negrito */
+text-align: center;              /* alinha texto horizontalmente */
+text-decoration: underline;     /* sublinha o texto */
+text-transform: uppercase;      /* deixa tudo maiúsculo */
+
+/* Caixa (box model) */
+width: 300px;            /* largura da caixa */
+height: 200px;           /* altura da caixa */
+padding: 10px;           /* espaço interno entre borda e conteúdo */
+margin: 20px;            /* espaço externo em volta da caixa */
+border: 2px solid black; /* borda preta sólida de 2px */
+border-radius: 10px;     /* cantos arredondados */
+
+/* Cores e fundos */
+background-color: lightblue;        /* cor de fundo */
+background-image: url('fundo.jpg'); /* imagem de fundo */
+background-size: cover;             /* faz a imagem cobrir toda a área */
+
+/* Posicionamento */
+position: static;      /* padrão, posição normal */
+position: relative;    /* posição relativa ao local normal (pode mover com top/left) */
+position: absolute;    /* posição relativa ao ancestral posicionado */
+position: fixed;       /* fixa na tela (não rola com a página) */
+top: 10px;             /* distancia do topo (para relative/absolute/fixed) */
+left: 20px;            /* distancia da esquerda */
+z-index: 1;            /* ordem de sobreposição (maior fica na frente) */
+
+/* Display e alinhamento */
+
+/* DISPLAY define como o elemento é exibido: */
+/* block = ocupa linha inteira, começa em nova linha */
+display: block;
+/* inline = fica na mesma linha que outros elementos */
+display: inline;
+/* none = elemento não é exibido */
+display: none;
+
+/* Alinhamento de texto (horizontal dentro da caixa) */
+text-align: center;  /* centraliza texto horizontalmente */
+
+/* Alinhamento vertical em elementos inline ou tabelas */
+vertical-align: middle;  /* alinha verticalmente ao meio (útil em inline-block ou células de tabela) */
+
+/* Flexbox – layout flexível moderno */
+display: flex;             /* define container flexível */
+
+/* Alinha horizontalmente (no eixo principal) */
+justify-content: center;   /* centraliza os itens horizontalmente */
+justify-content: flex-start; /* itens começam à esquerda */
+justify-content: flex-end; /* itens alinham à direita */
+justify-content: space-between; /* espaço igual entre itens */
+
+/* Alinha verticalmente (no eixo cruzado) */
+align-items: center;       /* centraliza verticalmente */
+align-items: flex-start;   /* alinha no topo */
+align-items: flex-end;     /* alinha embaixo */
+
+/* Define a direção dos itens */
+flex-direction: row;       /* padrão, itens na horizontal */
+flex-direction: column;    /* itens empilhados verticalmente */
+
+/* Espaçamento entre os itens */
+gap: 10px;                /* espaço de 10px entre os itens */
+
+/* Pseudo-classes */
+a:hover { color: red; }           /* muda cor do link quando passa mouse */
+input:focus { border: 2px solid blue; } /* muda borda ao focar no campo */
+
+/* Outros */
+cursor: pointer;            /* cursor muda para mãozinha (botão clicável) */
+opacity: 0.5;               /* torna elemento semi-transparente */
+overflow: hidden;           /* esconde conteúdo que ultrapassar a caixa */
+box-shadow: 2px 2px 5px gray; /* sombra leve em volta da caixa */
+transition: all 0.3s ease;  /* anima mudanças suavemente em 0.3 segundos */

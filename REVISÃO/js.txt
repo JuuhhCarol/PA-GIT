@@ -1,0 +1,132 @@
+// --- Funções ---
+// Função tradicional
+function saudacao(nome) {
+  return "Olá, " + nome + "!";
+}
+console.log(saudacao("João")); // Olá, João!
+
+// Função anônima (função sem nome)
+const soma = function(a, b) {
+  return a + b;
+};
+console.log(soma(5, 3)); // 8
+
+// Arrow function (mais curta)
+const multiplica = (x, y) => x * y;
+console.log(multiplica(4, 7)); // 28
+
+// Função com parâmetro padrão
+function elevar(base, expoente = 2) {
+  return base ** expoente;
+}
+console.log(elevar(3));    // 9 (3²)
+console.log(elevar(2, 3)); // 8 (2³)
+
+
+// --- Arrays ---
+// Criar array
+let frutas = ["maçã", "banana", "laranja"];
+
+// Acessar elemento
+console.log(frutas[1]); // banana
+
+// Adicionar elemento no fim
+frutas.push("uva");
+
+// Remover último elemento
+frutas.pop();
+
+// Iterar com for clássico
+for(let i = 0; i < frutas.length; i++) {
+  console.log(frutas[i]);
+}
+
+// Iterar com for...of (mais moderno)
+for (let fruta of frutas) {
+  console.log(fruta);
+}
+
+// Métodos úteis de array
+let numeros = [1, 2, 3, 4, 5];
+
+// map: cria novo array transformado
+let dobro = numeros.map(n => n * 2);
+console.log(dobro); // [2, 4, 6, 8, 10]
+
+// filter: filtra elementos que passam condição
+let pares = numeros.filter(n => n % 2 === 0);
+console.log(pares); // [2, 4]
+
+// reduce: reduz o array a um valor só
+let soma = numeros.reduce((total, n) => total + n, 0);
+console.log(soma); // 15
+
+
+// --- Objetos ---
+// Criar objeto
+let pessoa = {
+  nome: "Ana",
+  idade: 30,
+  falar: function() {
+    console.log("Oi, eu sou " + this.nome);
+  },
+  aniversario() {
+    this.idade++;
+  }
+};
+
+console.log(pessoa.nome);  // Ana
+pessoa.falar();            // Oi, eu sou Ana
+pessoa.aniversario();
+console.log(pessoa.idade); // 31
+
+// Acessar propriedades com colchetes
+console.log(pessoa["idade"]); // 31
+
+// Adicionar nova propriedade
+pessoa.cidade = "São Paulo";
+
+
+// --- Manipulação DOM ---
+// Selecionar elementos
+const titulo = document.getElementById("titulo");
+const paragrafos = document.querySelectorAll("p");
+
+// Alterar conteúdo
+titulo.textContent = "Novo Título";
+paragrafos[0].innerHTML = "<strong>Texto em negrito</strong>";
+
+// Criar e adicionar novo elemento
+const novoParagrafo = document.createElement("p");
+novoParagrafo.textContent = "Parágrafo criado com JS";
+document.body.appendChild(novoParagrafo);
+
+// Eventos
+const botao = document.querySelector("#botao");
+botao.addEventListener("click", () => {
+  alert("Botão clicado!");
+});
+
+
+// --- Trabalhando com datas ---
+let hoje = new Date();
+console.log(hoje.toLocaleDateString());  // Exemplo: 02/09/2025
+console.log(hoje.getFullYear());          // Ano atual
+
+
+// --- Dicas importantes ---
+// == vs === : sempre prefira === (compara tipo e valor)
+// Use let e const em vez de var (var tem escopo estranho)
+// Sempre declare funções antes de usar (ou use arrow functions)
+// Use template strings para facilitar concatenação:
+let nome = "Carlos";
+console.log(`Olá, ${nome}! Bem-vindo.`);  // Olá, Carlos! Bem-vindo.
+
+// --- Função para imprimir array bonito ---
+function imprimeArray(arr) {
+  arr.forEach((item, i) => {
+    console.log(`Índice ${i}: ${item}`);
+  });
+}
+imprimeArray(frutas);
+

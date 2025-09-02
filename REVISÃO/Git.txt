@@ -1,0 +1,43 @@
+# CONFIGURAÇÃO INICIAL (fazer só uma vez na máquina)
+git config --global user.name "Seu Nome"
+git config --global user.email "seu@email.com"
+
+# CLONAR UM REPOSITÓRIO EXISTENTE DO GITHUB
+git clone https://github.com/usuario/nome-do-repo.git
+
+# ENTRAR NA PASTA DO REPOSITÓRIO CLONADO
+cd nome-do-repo
+
+# VERIFICAR O STATUS DOS ARQUIVOS
+git status
+
+# ADICIONAR ARQUIVOS PARA O COMMIT
+git add nome-do-arquivo       # adiciona um arquivo específico
+git add .                     # adiciona todos os arquivos modificados
+
+# COMMITAR (salvar alterações no histórico)
+git commit -m "mensagem do commit"
+
+# VER HISTÓRICO DE COMMITS
+git log
+
+# CONECTAR COM REPOSITÓRIO REMOTO (caso ainda não tenha conectado)
+git remote add origin https://github.com/usuario/nome-do-repo.git
+
+# ENVIAR ALTERAÇÕES PRO GITHUB (push)
+git push -u origin main       # 'main' é o nome padrão do branch principal
+
+# ATUALIZAR REPOSITÓRIO LOCAL COM O REMOTO (pull)
+git pull origin main
+
+# CRIAR UMA NOVA BRANCH (opcional)
+git branch nome-da-branch
+
+# TROCAR PARA OUTRA BRANCH
+git checkout nome-da-branch
+
+# Desfaz modificações de um arquivo (volta ao último commit)
+git checkout -- nome-do-arquivo
+
+# Criar o arquivo (pode fazer manualmente também)
+touch .gitignore
