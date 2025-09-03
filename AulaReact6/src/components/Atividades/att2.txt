@@ -1,0 +1,29 @@
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import { Helloworld } from './components/Helloworld'
+import { PinkSquare } from '../BlueSquare/PinkSquare'
+import { BlackSquare } from '../BlueSquare/BlackSquare'
+import { BlueSquare } from '../BlueSquare/BlueSquare'
+import { Square } from '../BlueSquare/Square'
+
+function App() {
+  const [ color,setcolor] = useState()
+ 
+
+  return (
+
+    <>
+    <div style={{backgroundColor : color, color:'black'}}>
+      <h2>Vai Tomando</h2>
+    </div>
+
+    <button onClick={()=> [setcolor(color == "purple"? "pink":"purple")]}>
+      alterar cor
+    </button>
+    </>
+  )
+}
+
+export default App

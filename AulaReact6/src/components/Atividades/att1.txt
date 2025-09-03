@@ -1,0 +1,30 @@
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import { Helloworld } from './components/Helloworld'
+import { PinkSquare } from '../BlueSquare/PinkSquare'
+import { BlackSquare } from '../BlueSquare/BlackSquare'
+import { BlueSquare } from '../BlueSquare/BlueSquare'
+import { Square } from '../BlueSquare/Square'
+
+function App() {
+
+  const [visibility,setvisibility] = useState(true)
+ 
+
+  return (
+    <>
+    { visibility &&
+      <div>
+        <h2>Matheus Joaquim</h2>
+      </div>
+    }
+    <button onClick = {() => [setvisibility(visibility==true? false:true)]}>
+      alterar visibilidade
+    </button>
+    </>
+  )
+}
+
+export default App

@@ -1,33 +1,20 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import { Helloworld } from './components/Helloworld'
-import { PinkSquare } from '../BlueSquare/PinkSquare'
-import { BlackSquare } from '../BlueSquare/BlackSquare'
-import { BlueSquare } from '../BlueSquare/BlueSquare'
-import { Square } from '../BlueSquare/Square'
+import {browserRouter, Route} from 'react-router-dom'
+import home from './components/home'
+import about from './components/about'
 
 function App() {
-  const [cliques, setCliques] = useState(0); 
-  const [cont, setCont] = useState(0); 
-  const [name, setText] = useState('')
-  const handleClick = () => {
-    const novoTotalCliques = cliques + 1;
-    setCliques(novoTotalCliques);
-    if (novoTotalCliques % 10 === 0) {
-      setCont(cont + 1);
-    }
-  };
- 
-
   return (
     <>
-    <button onClick={handleClick}>
-      Contador: {cont}
-    </button>
+    <browserRouter>
+    <Routes>
+      <Route path='/home' element={<Home/>}></Route>
+      <Route path='/about' element={<About/>}></Route>
+    </Routes>
+    </browserRouter>
     </>
   )
 }
 
-export default App
+export default app
