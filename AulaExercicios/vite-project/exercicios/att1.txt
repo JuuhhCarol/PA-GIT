@@ -1,0 +1,45 @@
+import { useEffect, useState } from 'react';
+
+function App() {
+  const [horaAtual, setHoraAtual] = useState(new Date());
+
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      setHoraAtual(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalo);
+  }, []);
+
+  const horaFormatada = horaAtual.toLocaleTimeString();
+
+  return (
+    <div style={{ textAlign: 'center', fontSize: '2rem' }}>
+      <h1>Relógio Digital:</h1>
+      <p>{horaFormatada}</p>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+AJUSTAR O CSS PARA =>
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  max-width: 1280px; /* opcional */
+  padding: 2rem; /* opcional */
+  box-sizing: border-box;
+}
