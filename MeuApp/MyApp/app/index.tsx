@@ -2,16 +2,29 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { useRouter } from 'expo-router';
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
+import {app} from './fireBaseConfig'
+
 
 export default function HomeScreen() {
     const router = useRouter();
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState ("");
+
+    const auth = getAuth(app)
+        const signUp = () =>{
+            if(password === confirmPassword){
+                return createUserWithEmailAndPassword(auth,email,password)
+            }else{ return alert ("erro!")}
+        }
+    
 
     const [fontsLoaded] = useFonts({
         Montserrat_400Regular,
         Montserrat_700Bold,
     });
 
-    const [showRecovery, setShowRecovery] = useState(false);
+    const [showRecovery, setShowRecovery] = useState(false);       
     const [email, setEmail] = useState('');
 
     if (!fontsLoaded) return null;
