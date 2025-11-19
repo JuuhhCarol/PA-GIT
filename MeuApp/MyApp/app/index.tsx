@@ -2,85 +2,65 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { useRouter } from 'expo-router';
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
-import {app} from './fireBaseConfig'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { app } from './fireBaseConfig';
 
-
-export default function HomeScreen() {
+export default function Login() {
     const router = useRouter();
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState ("");
+    const auth = getAuth(app);
 
-    const auth = getAuth(app)
-        const signUp = () =>{
-            if(password === confirmPassword){
-                return createUserWithEmailAndPassword(auth,email,password)
-            }else{ return alert ("erro!")}
-        }
-    
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const [fontsLoaded] = useFonts({
         Montserrat_400Regular,
         Montserrat_700Bold,
     });
 
-    const [showRecovery, setShowRecovery] = useState(false);       
-    const [email, setEmail] = useState('');
-
     if (!fontsLoaded) return null;
 
-    const handlePasswordReset = () => {
-        if (!email) {
-            Alert.alert('Erro', 'Por favor, digite seu e-mail.');
+    const login = async () => {
+        if (!email.trim() || !password.trim()) {
+            Alert.alert("Erro", "Preencha todos os campos.");
             return;
         }
-        Alert.alert('Sucesso', `Enviamos um link de recuperação para ${email}.`);
-        setShowRecovery(false);
-        setEmail('');
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            Alert.alert("Sucesso", "Login realizado!");
+        } catch (error) {
+            Alert.alert("Erro", "E-mail ou senha incorretos.");
+        }
     };
-
-    if (showRecovery) {
-        return (
-            <View style={styles.background}>
-                <View style={styles.card}>
-                    <Text style={styles.title}>Recuperar Senha</Text>
-                    <Text style={styles.text}>Digite o e-mail da sua conta para redefinir sua senha</Text>
-
-                    <TextInput
-                        placeholder="E-mail"
-                        placeholderTextColor="#F48FB1"
-                        style={styles.input}
-                        value={email}
-                        onChangeText={setEmail}
-                    />
-
-                    <TouchableOpacity style={styles.button} onPress={handlePasswordReset}>
-                        <Text style={styles.text}>Enviar link</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => setShowRecovery(false)}>
-                        <Text style={styles.text}>Voltar ao login</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        );
-    }
+    
 
     return (
         <View style={styles.background}>
             <View style={styles.card}>
                 <Text style={styles.title}>Bem-vindo!</Text>
 
-                <TextInput placeholder="E-mail" placeholderTextColor="#F48FB1" style={styles.input} />
-                <TextInput placeholder="Senha" placeholderTextColor="#F48FB1" secureTextEntry style={styles.input} />
+                <TextInput
+                    placeholder="E-mail"
+                    placeholderTextColor="#F48FB1"
+                    style={styles.input}
+                    onChangeText={setEmail}
+                />
 
-                <TouchableOpacity style={styles.button} onPress={() => Alert.alert('Login', 'Login realizado com sucesso!')}>
+                <TextInput
+                    placeholder="Senha"
+                    placeholderTextColor="#F48FB1"
+                    secureTextEntry
+                    style={styles.input}
+                    onChangeText={setPassword}
+                />
+
+                <TouchableOpacity style={styles.button} onPress={login}>
                     <Text style={styles.text}>Login</Text>
                 </TouchableOpacity>
 
-                <Text style={styles.forgotPasswordMsg}>Esqueceu sua senha?</Text>
-                <TouchableOpacity onPress={() => setShowRecovery(true)}>
-                    <Text style={styles.link}>Recupere aqui</Text>
+                <Text style={styles.smallText}>Não tem uma conta?</Text>
+                <TouchableOpacity onPress={() => router.push('/register')}>
+                    <Text style={styles.link}>Crie aqui</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -122,9 +102,6 @@ const styles = StyleSheet.create({
         color: '#E91E63',
         fontSize: 16,
         marginVertical: 10,
-        shadowColor: '#E91E63',
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
         elevation: 2,
     },
     button: {
@@ -141,8 +118,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#FFF',
     },
-    forgotPasswordMsg: {
-        marginTop: 25,
+    smallText: {
+        marginTop: 20,
         fontFamily: 'Montserrat_400Regular',
         color: '#E91E63',
     },
@@ -153,4 +130,3 @@ const styles = StyleSheet.create({
         color: '#AD1457',
     },
 });
-
