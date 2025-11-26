@@ -1,132 +1,150 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
-import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
-import { useRouter } from 'expo-router';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { Link, router } from 'expo-router';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { useState } from "react";
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { app } from './fireBaseConfig';
 
-export default function Login() {
-    const router = useRouter();
-    const auth = getAuth(app);
+export default function App() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const minPassword = 6;
+  const auth = getAuth(app);
 
-    const [fontsLoaded] = useFonts({
-        Montserrat_400Regular,
-        Montserrat_700Bold,
-    });
+  const signUp = async () => {
 
-    if (!fontsLoaded) return null;
+    // Senha muito curta
+    if (password.length < minPassword) {
+      return Alert.alert("Erro", "A senha deve ter no mínimo 6 caracteres!");
+    }
 
-    const login = async () => {
-        if (!email.trim() || !password.trim()) {
-            Alert.alert("Erro", "Preencha todos os campos.");
-            return;
-        }
+    // Confirmar se as senhas batem
+    if (password !== confirmPassword) {
+      return Alert.alert("Erro", "As senhas não coincidem!");
+    }
 
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            Alert.alert("Sucesso", "Login realizado!");
-        } catch (error) {
-            Alert.alert("Erro", "E-mail ou senha incorretos.");
-        }
-    };
-    
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
 
-    return (
-        <View style={styles.background}>
-            <View style={styles.card}>
-                <Text style={styles.title}>Bem-vindo!</Text>
+      Alert.alert("Sucesso", "Usuário registrado com sucesso!");
 
-                <TextInput
-                    placeholder="E-mail"
-                    placeholderTextColor="#F48FB1"
-                    style={styles.input}
-                    onChangeText={setEmail}
-                />
+      router.navigate('/login');
 
-                <TextInput
-                    placeholder="Senha"
-                    placeholderTextColor="#F48FB1"
-                    secureTextEntry
-                    style={styles.input}
-                    onChangeText={setPassword}
-                />
+    } catch (e) {
+      return Alert.alert("Erro", "Email já existente!");
+    }
+  };
 
-                <TouchableOpacity style={styles.button} onPress={login}>
-                    <Text style={styles.text}>Login</Text>
-                </TouchableOpacity>
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Crie sua conta! </Text>
+      <Text style={styles.subtitle}>Por favor informe seus dados...</Text>
 
-                <Text style={styles.smallText}>Não tem uma conta?</Text>
-                <TouchableOpacity onPress={() => router.push('/register')}>
-                    <Text style={styles.link}>Crie aqui</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
+      <TextInput
+        placeholder="E-mail"
+        placeholderTextColor="#a0a0a0"
+        style={styles.input}
+        onChangeText={setEmail}
+      />
+
+      <TextInput
+        placeholder="Senha"
+        placeholderTextColor="#a0a0a0"
+        secureTextEntry
+        style={styles.input}
+        onChangeText={setPassword}
+      />
+
+      <TextInput
+        placeholder="Confirme a senha"
+        placeholderTextColor="#a0a0a0"
+        secureTextEntry
+        style={styles.input}
+        onChangeText={setConfirmPassword}
+      />
+
+      <TouchableOpacity style={styles.button} onPress={signUp}>
+        <Text style={styles.buttonText}>Criar</Text>
+      </TouchableOpacity>
+
+      <Link href={'/login'} style={styles.linkText}>
+        <Text style={styles.linkDescription}>
+          Já tem uma conta? <Text style={styles.linkHighlight}>entre aqui</Text>
+        </Text>
+      </Link>
+
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    card: {
-        backgroundColor: '#FFF0F5',
-        width: '85%',
-        paddingVertical: 40,
-        paddingHorizontal: 30,
-        borderRadius: 20,
-        alignItems: 'center',
-        shadowColor: '#E91E63',
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
-        elevation: 5,
-    },
-    title: {
-        color: '#E91E63',
-        fontSize: 36,
-        fontFamily: 'Montserrat_700Bold',
-        marginBottom: 30,
-    },
-    input: {
-        width: '100%',
-        height: 45,
-        borderRadius: 10,
-        backgroundColor: '#FFFFFF',
-        paddingHorizontal: 15,
-        fontFamily: 'Montserrat_400Regular',
-        color: '#E91E63',
-        fontSize: 16,
-        marginVertical: 10,
-        elevation: 2,
-    },
-    button: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '80%',
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: '#E91E63',
-        marginTop: 25,
-    },
-    text: {
-        fontFamily: 'Montserrat_700Bold',
-        fontSize: 18,
-        color: '#FFF',
-    },
-    smallText: {
-        marginTop: 20,
-        fontFamily: 'Montserrat_400Regular',
-        color: '#E91E63',
-    },
-    link: {
-        fontFamily: 'Montserrat_700Bold',
-        textDecorationLine: 'underline',
-        marginTop: 5,
-        color: '#AD1457',
-    },
+
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 30,
+    backgroundColor: "#ffffff",
+  },
+
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    color: "#1c1c1e",
+    marginBottom: 5,
+  },
+
+  subtitle: {
+    color: "#7d7d7d",
+    fontSize: 15,
+    marginBottom: 20,
+  },
+
+  input: {
+    backgroundColor: "#f5f5f7",
+    color: "#333",
+    borderRadius: 12,
+    height: 50,
+    paddingHorizontal: 15,
+    marginBottom: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 2,
+  },
+
+  button: {
+    backgroundColor: "#ffb6c1",
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+    marginTop: 10,
+    shadowColor: "#ffb6c1",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
+    elevation: 3,
+  },
+
+  buttonText: {
+    color: "black",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
+  linkText: {
+    alignSelf: "center",
+    marginVertical: 10,
+  },
+
+  linkDescription: {
+    fontSize: 15,
+    color: "#7d7d7d",
+  },
+
+  linkHighlight: {
+    color: "#ffb6c1",
+    fontWeight: "700",
+  },
 });
