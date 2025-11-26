@@ -1,126 +1,121 @@
 import { getAuth } from "firebase/auth";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View, StyleSheet, ScrollView } from "react-native";
-import { db } from './fireBaseConfig';
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { FlatList, Text, View, StyleSheet } from "react-native";
+import { db } from "./fireBaseConfig";
 
-export default function Home() {
+export default function BookList() {
 
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [year, setReviw] = useState('');
-  const [isbn, setTime] = useState('');
-  const [coverUrl, setCoverUrl] = useState('');
+  const [books, setBooks] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  async function registerBook() {
+  async function fetchBooks() {
     try {
       const auth = getAuth();
       const user = auth.currentUser;
 
       if (!user) return;
 
-      if (!title || !author || !year) {
-        console.log("Preencha título, autor e ano.");
-        return;
-      }
+      const q = query(
+        collection(db, "books"),
+        where("userId", "==", user.uid)
+      );
 
-      const book = {
-        title,
-        author,
-        year: Number(year),
-        isbn: isbn || null,
-        coverUrl,
-        userId: user.uid,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      };
+      const snapshot = await getDocs(q);
 
-      await addDoc(collection(db, "books"), book);
-      console.log("Livro cadastrado!");
+      const list = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setBooks(list);
 
     } catch (err) {
-      console.log("Erro ao cadastrar:", err);
+      console.log("Erro ao buscar livros:", err);
+    } finally {
+      setLoading(false);
     }
   }
 
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.loading}>Carregando...</Text>
+      </View>
+    );
+  }
+
+  if (books.length === 0) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.empty}>Nenhum livro encontrado.</Text>
+      </View>
+    );
+  }
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Cadastrar Livro</Text>
-      <Text style={styles.subtitle}>Insira as informações abaixo...</Text>
-
-      <TextInput
-        placeholder="Título"
-        placeholderTextColor="#a0a0a0"
-        style={styles.input}
-        onChangeText={setTitle}
-      />
-
-      <TextInput
-        placeholder="Autor"
-        placeholderTextColor="#a0a0a0"
-        style={styles.input}
-        onChangeText={setAuthor}
-      />
-
-      <TextInput
-        placeholder="Quantos dias levei para ler:"
-        placeholderTextColor="#a0a0a0"
-        style={styles.input}
-        onChangeText={setTime}
-        keyboardType="numeric"
-      />
+    <View style={styles.container}>
       
-      <TextInput
-        placeholder="Avaliação pessoal do livro:"
-        placeholderTextColor="#a0a0a0"
-        style={styles.input}
-        onChangeText={setReviw}
+      <Text style={styles.title}>Meus Livros</Text>
+
+      <FlatList
+        data={books}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text style={styles.label}>Título: <Text style={styles.value}>{item.title}</Text></Text>
+            <Text style={styles.label}>Autor: <Text style={styles.value}>{item.author}</Text></Text>
+            <Text style={styles.label}>Dias para ler: <Text style={styles.value}>{item.readingTime}</Text></Text>
+            <Text style={styles.label}>Avaliação: <Text style={styles.value}>{item.review}</Text></Text>
+          </View>
+        )}
       />
-
-
-      <TextInput
-        placeholder="Link da capa"
-        placeholderTextColor="#a0a0a0"
-        style={styles.input}
-        onChangeText={setCoverUrl}
-      />
-
-      <TouchableOpacity style={styles.button} onPress={registerBook}>
-        <Text style={styles.buttonText}>Cadastrar</Text>
-      </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
 
   container: {
-    padding: 25,
-    paddingTop: 60,
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#ffffff",
+  },
+
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#fff",
-    flexGrow: 1,
+  },
+
+  loading: {
+    fontSize: 16,
+    color: "#5a67d8",
+    fontWeight: "600",
+  },
+
+  empty: {
+    fontSize: 16,
+    color: "#7d7d7d",
   },
 
   title: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "700",
-    color: "#1c1c1e",
-    marginBottom: 5,
-  },
-
-  subtitle: {
-    color: "#7d7d7d",
-    fontSize: 15,
-    marginBottom: 25,
-  },
-
-  input: {
-    backgroundColor: "#f5f5f7",
-    color: "#333",
-    borderRadius: 12,
-    height: 50,
-    paddingHorizontal: 15,
     marginBottom: 15,
+    color: "#1c1c1e",
+  },
+
+  card: {
+    backgroundColor: "#f5f5f7",
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 12,
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowOffset: { width: 0, height: 2 },
@@ -128,22 +123,14 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
 
-  button: {
-    backgroundColor: "#ffb6c1",
-    paddingVertical: 14,
-    borderRadius: 14,
-    alignItems: "center",
-    marginTop: 10,
-    shadowColor: "#ffb6c1",
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 5,
-    elevation: 3,
+  label: {
+    fontSize: 15,
+    color: "#555",
+    fontWeight: "600",
   },
 
-  buttonText: {
-    color: "#black",
-    fontSize: 18,
+  value: {
+    color: "#1c1c1e",
     fontWeight: "700",
   },
 

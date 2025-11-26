@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { FlatList, Text, View, StyleSheet } from "react-native";
 import { db } from "./fireBaseConfig";
 
-export default function VehicleList() {
+export default function BookList() {
 
-  const [vehicles, setVehicles] = useState<any[]>([]);
+  const [books, setBooks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  async function fetchVehicles() {
+  async function fetchBooks() {
     try {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -17,7 +17,7 @@ export default function VehicleList() {
       if (!user) return;
 
       const q = query(
-        collection(db, "vehicles"),
+        collection(db, "books"),
         where("userId", "==", user.uid)
       );
 
@@ -28,17 +28,17 @@ export default function VehicleList() {
         ...doc.data(),
       }));
 
-      setVehicles(list);
+      setBooks(list);
 
     } catch (err) {
-      console.log("Erro ao buscar veículos:", err);
+      console.log("Erro ao buscar livros:", err);
     } finally {
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    fetchVehicles();
+    fetchBooks();
   }, []);
 
   if (loading) {
@@ -49,10 +49,10 @@ export default function VehicleList() {
     );
   }
 
-  if (vehicles.length === 0) {
+  if (books.length === 0) {
     return (
       <View style={styles.center}>
-        <Text style={styles.empty}>Nenhum veículo encontrado.</Text>
+        <Text style={styles.empty}>Nenhum livro encontrado.</Text>
       </View>
     );
   }
@@ -60,17 +60,17 @@ export default function VehicleList() {
   return (
     <View style={styles.container}>
       
-      <Text style={styles.title}>Meus Veículos</Text>
+      <Text style={styles.title}>Meus Livros</Text>
 
       <FlatList
-        data={vehicles}
+        data={books}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Text style={styles.label}>Marca: <Text style={styles.value}>{item.brand}</Text></Text>
-            <Text style={styles.label}>Modelo: <Text style={styles.value}>{item.model}</Text></Text>
-            <Text style={styles.label}>Ano: <Text style={styles.value}>{item.year}</Text></Text>
-            <Text style={styles.label}>Placa: <Text style={styles.value}>{item.plate}</Text></Text>
+            <Text style={styles.label}>Título: <Text style={styles.value}>{item.title}</Text></Text>
+            <Text style={styles.label}>Autor: <Text style={styles.value}>{item.author}</Text></Text>
+            <Text style={styles.label}>Dias para ler: <Text style={styles.value}>{item.readingTime}</Text></Text>
+            <Text style={styles.label}>Avaliação: <Text style={styles.value}>{item.review}</Text></Text>
           </View>
         )}
       />
@@ -135,3 +135,4 @@ const styles = StyleSheet.create({
   },
 
 });
+
